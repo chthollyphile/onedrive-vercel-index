@@ -1,6 +1,6 @@
 {
   "icon": "/icons/128.png",
-  "title": "Spencer's OneDrive",
+  "title": "你群网盘 -まごころを、君に-",
   "baseDirectory": "/Public",
   "maxItems": 100,
   "googleFontSans": "Inter",
@@ -8,20 +8,19 @@
   "googleFontLinks": [
     "https://fonts.googleapis.com/css2?family=Fira+Mono&family=Inter:wght@400;500;700&display=swap"
   ],
-  "footer": "Powered by <a href=\"https://github.com/spencerwooo/onedrive-vercel-index\" target=\"_blank\" rel=\"noopener noreferrer\">onedrive-vercel-index</a>. Made with ❤ by SpencerWoo.",
+  "footer": "Powered by onedrive-vercel-index. 👁️ I thought what I'd do was, I'd pretend I was one of those deaf-mutes.",
   "protectedRoutes": [
-    "/🌞 Private folder/u-need-a-password",
-    "/🥟 Some test files/Protected route"
+    "/💾赫瓦格密尔之泉/private"
   ],
-  "email": "mailto:spencer.wushangbo@gmail.com",
+  "email": "mailto:elamchamomile@gmail.com",
   "links": [
     {
       "name": "GitHub",
       "link": "https://github.com/spencerwooo/onedrive-vercel-index"
     },
     {
-      "name": "Telegram",
-      "link": "https://t.me/realSpencerWoo"
+      "name": "twitter",
+      "link": "https://twitter.com/SinoSodom"
     }
   ]
 }
