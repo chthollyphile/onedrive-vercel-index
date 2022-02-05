@@ -1,4 +1,4 @@
-import { IconPrefix, IconName } from '@fortawesome/fontawesome-common-types'
+import type { IconPrefix, IconName } from '@fortawesome/fontawesome-common-types'
 
 const icons: { [key: string]: [IconPrefix, IconName] } = {
   image: ['far', 'file-image'],
@@ -69,6 +69,11 @@ const extensions = {
 
   txt: icons.text,
   rtf: icons.text,
+  vtt: icons.text,
+  srt: icons.text,
+  log: icons.text,
+  diff: icons.text,
+
   md: icons.markdown,
 
   epub: icons.book,
