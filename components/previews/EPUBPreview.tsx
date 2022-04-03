@@ -2,12 +2,18 @@ import type { OdFileObject } from '../../types'
 
 import { FC, useEffect, useRef, useState } from 'react'
 import { ReactReader } from 'react-reader'
+import { useRouter } from 'next/router'
+import { useTranslation } from 'next-i18next'
 
 import Loading from '../Loading'
 import DownloadButtonGroup from '../DownloadBtnGtoup'
 import { DownloadBtnContainer } from './Containers'
+import { getStoredToken } from '../../utils/protectedRouteHandler'
 
 const EPUBPreview: FC<{ file: OdFileObject }> = ({ file }) => {
+  const { asPath } = useRouter()
+  const hashedToken = getStoredToken(asPath)
+
   const [epubContainerWidth, setEpubContainerWidth] = useState(400)
   const epubContainer = useRef<HTMLDivElement>(null)
 
@@ -17,6 +23,8 @@ const EPUBPreview: FC<{ file: OdFileObject }> = ({ file }) => {
 
   const [location, setLocation] = useState<string>()
   const onLocationChange = (cfiStr: string) => setLocation(cfiStr)
+
+  const { t } = useTranslation()
 
   // Fix for not valid epub files according to
   // https://github.com/gerhardsletten/react-reader/issues/33#issuecomment-673964947
@@ -48,9 +56,9 @@ const EPUBPreview: FC<{ file: OdFileObject }> = ({ file }) => {
             }}
           >
             <ReactReader
-              url={file['@microsoft.graph.downloadUrl']}
+              url={`/api/raw/?path=${asPath}${hashedToken ? '&token=' + hashedToken : ''}`}
               getRendition={rendition => fixEpub(rendition)}
-              loadingView={<Loading loadingText="Loading EPUB ..." />}
+              loadingView={<Loading loadingText={t('Loading EPUB ...')} />}
               location={location}
               locationChanged={onLocationChange}
               epubInitOptions={{ openAs: 'epub' }}
@@ -60,7 +68,7 @@ const EPUBPreview: FC<{ file: OdFileObject }> = ({ file }) => {
         </div>
       </div>
       <DownloadBtnContainer>
-        <DownloadButtonGroup downloadUrl={file['@microsoft.graph.downloadUrl']} />
+        <DownloadButtonGroup />
       </DownloadBtnContainer>
     </div>
   )

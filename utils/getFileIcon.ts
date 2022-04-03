@@ -58,14 +58,24 @@ const extensions = {
   tar: icons.archive,
   zip: icons.archive,
 
-  css: icons.code,
-  py: icons.code,
-  html: icons.code,
-  js: icons.code,
-  ts: icons.code,
   c: icons.code,
-  rb: icons.code,
   cpp: icons.code,
+  js: icons.code,
+  jsx: icons.code,
+  java: icons.code,
+  sh: icons.code,
+  cs: icons.code,
+  py: icons.code,
+  css: icons.code,
+  html: icons.code,
+  ts: icons.code,
+  tsx: icons.code,
+  rs: icons.code,
+  vue: icons.code,
+  json: icons.code,
+  yml: icons.code,
+  yaml: icons.code,
+  toml: icons.code,
 
   txt: icons.text,
   rtf: icons.text,
@@ -95,8 +105,11 @@ export function hasKey<O>(obj: O, key: PropertyKey): key is keyof O {
   return key in obj
 }
 
+export function getRawExtension(fileName: string): string {
+  return fileName.slice(((fileName.lastIndexOf('.') - 1) >>> 0) + 2)
+}
 export function getExtension(fileName: string): string {
-  return fileName.slice(((fileName.lastIndexOf('.') - 1) >>> 0) + 2).toLowerCase()
+  return getRawExtension(fileName).toLowerCase()
 }
 
 export function getFileIcon(fileName: string, flags?: { video?: boolean }): [IconPrefix, IconName] {

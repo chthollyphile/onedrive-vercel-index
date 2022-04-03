@@ -1,7 +1,10 @@
+import { useRouter } from 'next/router'
+import { useTranslation } from 'next-i18next'
+
 import FourOhFour from '../FourOhFour'
 import Loading from '../Loading'
 import { DownloadButton } from '../DownloadBtnGtoup'
-import useAxiosGet from '../../utils/fetchOnMount'
+import useFileContent from '../../utils/fetchOnMount'
 import { DownloadBtnContainer, PreviewContainer } from './Containers'
 
 const parseDotUrl = (content: string): string | undefined => {
@@ -12,7 +15,10 @@ const parseDotUrl = (content: string): string | undefined => {
 }
 
 const TextPreview = ({ file }) => {
-  const { response: content, error, validating } = useAxiosGet(file['@microsoft.graph.downloadUrl'])
+  const { asPath } = useRouter()
+  const { t } = useTranslation()
+
+  const { response: content, error, validating } = useFileContent(`/api/raw/?path=${asPath}`, asPath)
   if (error) {
     return (
       <PreviewContainer>
@@ -24,7 +30,7 @@ const TextPreview = ({ file }) => {
   if (validating) {
     return (
       <PreviewContainer>
-        <Loading loadingText="Loading file content..." />
+        <Loading loadingText={t('Loading file content...')} />
       </PreviewContainer>
     )
   }
@@ -32,7 +38,7 @@ const TextPreview = ({ file }) => {
   if (!content) {
     return (
       <PreviewContainer>
-        <FourOhFour errorMsg="File is empty." />
+        <FourOhFour errorMsg={t('File is empty.')} />
       </PreviewContainer>
     )
   }
@@ -45,11 +51,11 @@ const TextPreview = ({ file }) => {
       <DownloadBtnContainer>
         <div className="flex justify-center">
           <DownloadButton
-            onClickCallback={() => window.open(parseDotUrl(content) || '')}
+            onClickCallback={() => window.open(parseDotUrl(content) ?? '')}
             btnColor="blue"
-            btnText="Open URL"
+            btnText={t('Open URL')}
             btnIcon="external-link-alt"
-            btnTitle={`Open URL ${parseDotUrl(content) || ''}`}
+            btnTitle={t('Open URL{{url}}', { url: ' ' + parseDotUrl(content) ?? '' })}
           />
         </div>
       </DownloadBtnContainer>

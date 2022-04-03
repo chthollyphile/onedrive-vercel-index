@@ -1,11 +1,17 @@
+import { useRouter } from 'next/router'
+import { useTranslation } from 'next-i18next'
+
 import FourOhFour from '../FourOhFour'
 import Loading from '../Loading'
 import DownloadButtonGroup from '../DownloadBtnGtoup'
-import useAxiosGet from '../../utils/fetchOnMount'
+import useFileContent from '../../utils/fetchOnMount'
 import { DownloadBtnContainer, PreviewContainer } from './Containers'
 
 const TextPreview = ({ file }) => {
-  const { response: content, error, validating } = useAxiosGet(file['@microsoft.graph.downloadUrl'])
+  const { asPath } = useRouter()
+  const { t } = useTranslation()
+
+  const { response: content, error, validating } = useFileContent(`/api/raw/?path=${asPath}`, asPath)
   if (error) {
     return (
       <PreviewContainer>
@@ -16,17 +22,27 @@ const TextPreview = ({ file }) => {
 
   if (validating) {
     return (
-      <PreviewContainer>
-        <Loading loadingText="Loading file content..." />
-      </PreviewContainer>
+      <>
+        <PreviewContainer>
+          <Loading loadingText={t('Loading file content...')} />
+        </PreviewContainer>
+        <DownloadBtnContainer>
+          <DownloadButtonGroup />
+        </DownloadBtnContainer>
+      </>
     )
   }
 
   if (!content) {
     return (
-      <PreviewContainer>
-        <FourOhFour errorMsg="File is empty." />
-      </PreviewContainer>
+      <>
+        <PreviewContainer>
+          <FourOhFour errorMsg={t('File is empty.')} />
+        </PreviewContainer>
+        <DownloadBtnContainer>
+          <DownloadButtonGroup />
+        </DownloadBtnContainer>
+      </>
     )
   }
 
@@ -36,7 +52,7 @@ const TextPreview = ({ file }) => {
         <pre className="overflow-x-scroll p-0 text-sm md:p-3">{content}</pre>
       </PreviewContainer>
       <DownloadBtnContainer>
-        <DownloadButtonGroup downloadUrl={file['@microsoft.graph.downloadUrl']} />
+        <DownloadButtonGroup />
       </DownloadBtnContainer>
     </div>
   )
