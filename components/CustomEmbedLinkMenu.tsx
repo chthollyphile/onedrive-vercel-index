@@ -81,15 +81,17 @@ export default function CustomEmbedLinkMenu({
                 {t('Customise direct link')}
               </Dialog.Title>
               <Dialog.Description as="p" className="py-2 opacity-80">
-                {t('Change the raw file direct link to a URL ending with the extension of the file.')}{' '}
-                <a
-                  href="https://ovi.swo.moe/docs/features/customise-direct-link"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-blue-400 underline"
-                >
-                  {t('What is this?')}
-                </a>
+                <>
+                  {t('Change the raw file direct link to a URL ending with the extension of the file.')}{' '}
+                  <a
+                    href="https://ovi.swo.moe/docs/features/customise-direct-link"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-blue-400 underline"
+                  >
+                    {t('What is this?')}
+                  </a>
+                </>
               </Dialog.Description>
 
               <div className="mt-4">
@@ -111,13 +113,13 @@ export default function CustomEmbedLinkMenu({
                 />
                 <LinkContainer
                   title={t('Customised')}
-                  value={`${getBaseUrl()}/api/name/${name}/?path=${readablePath}${
+                  value={`${getBaseUrl()}/api/name/${name}?path=${readablePath}${
                     hashedToken ? `&odpt=${hashedToken}` : ''
                   }`}
                 />
                 <LinkContainer
                   title={t('Customised and encoded')}
-                  value={`${getBaseUrl()}/api/name/${name}/?path=${path}${hashedToken ? `&odpt=${hashedToken}` : ''}`}
+                  value={`${getBaseUrl()}/api/name/${name}?path=${path}${hashedToken ? `&odpt=${hashedToken}` : ''}`}
                 />
               </div>
             </div>
